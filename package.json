@@ -16,6 +16,7 @@
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20261127.1",
     "@sveltejs/vite-plugin-svelte": "^7.3.2",
+    "@types/node": "^22.20.7",
     "svelte": "^5.59.2",
     "svelte-check": "^4.7.8",
     "typescript": "^6.0.0",
