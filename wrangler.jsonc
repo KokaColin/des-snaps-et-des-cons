@@ -1,0 +1,30 @@
+// Configuration Cloudflare (offre gratuite : Workers + Durable Objects SQLite).
+// Voir docs/DEPLOIEMENT.md pour la mise en ligne.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "des-snaps-et-des-cons",
+  "main": "src/server/index.ts",
+  "compatibility_date": "2026-11-01",
+
+  // L'application (fichiers construits par Vite) est servie gratuitement et sans limite.
+  "assets": {
+    "directory": "./dist/client",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*", "/ws/*"]
+  },
+
+  "durable_objects": {
+    "bindings": [
+      // Un objet par partie : moteur de jeu, chronos, votes, scores.
+      { "name": "GAME_ROOM", "class_name": "GameRoom" },
+      // Un objet unique : comptes, photothèque, memes, statistiques.
+      { "name": "GROUP", "class_name": "Group" }
+    ]
+  },
+
+  // L'offre gratuite n'accepte que les Durable Objects adossés à SQLite.
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["GameRoom", "Group"] }],
+
+  "observability": { "enabled": true }
+}
