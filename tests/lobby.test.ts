@@ -88,6 +88,12 @@ describe('Salon : lancement', () => {
     expect(s.round).toBe(1);
   });
 
+  it('l’organisateur est compté prêt d’office', () => {
+    const s = lobby(3);
+    dispatch(s, 'm0', { type: 'ready', ready: false }, T0);
+    expect(startBlockers(s)).toEqual([]);
+  });
+
   it('exige au moins 2 photos iconiques par joueur', () => {
     const s = lobby(4);
     setLibrary(s, library(7));

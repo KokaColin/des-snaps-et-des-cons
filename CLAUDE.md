@@ -7,3 +7,5 @@
 - Rien ne sort vers un client sans passer par `view.ts`.
 - Nouveau gadget : un fichier dans `src/shared/gadgets/` qui respecte `gadget.ts`, enregistré dans `gadgets/index.ts`.
 - Gratuité stricte : offre gratuite Cloudflare uniquement (Workers, Durable Objects SQLite). Pas de R2, pas de service payant.
+- Avant de travailler : lire `docs/PROCHAINES-ETAPES.md`, puis `docs/CAHIER-DES-CHARGES.md` (règles qui font foi) et `docs/DIRECTION-ARTISTIQUE.md` pour toute interface.
+- Une pull request par lot, validée par le mainteneur.

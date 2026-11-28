@@ -4,13 +4,15 @@ Party game multijoueur du Groupe des 7 : chacun reçoit une photo du groupe, la 
 
 - Jouable depuis un navigateur (ordinateur, téléphone, tablette), installable sur l'écran d'accueil.
 - Hébergé gratuitement sur Cloudflare (Workers + Durable Objects), sans carte bancaire.
-- Cahier des charges complet : voir le document de conception partagé.
+- Cahier des charges : [docs/CAHIER-DES-CHARGES.md](docs/CAHIER-DES-CHARGES.md)
+- Direction artistique et maquettes : [docs/DIRECTION-ARTISTIQUE.md](docs/DIRECTION-ARTISTIQUE.md)
+- Reprise du projet : [docs/PROCHAINES-ETAPES.md](docs/PROCHAINES-ETAPES.md)
 
 ## État d'avancement
 
 | Lot | Contenu | État |
 | --- | --- | --- |
-| 1. Fondations | Mise en place, moteur de jeu testé, maquettes | En cours |
+| 1. Fondations | Mise en place, moteur de jeu testé, maquettes | Terminé |
 | 2. Cœur multijoueur | Comptes, photothèque, salon temps réel | À venir |
 | 3. Jeu complet | Partie jouable de bout en bout, Fauto | À venir |
 | 4. Finition | Habillage, profils, galerie, tests complets, doc | À venir |

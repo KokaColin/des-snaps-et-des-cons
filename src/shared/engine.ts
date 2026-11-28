@@ -237,7 +237,8 @@ export function startBlockers(state: GameState): string[] {
   if (n > c.maxPlayers) blockers.push('too_many_players');
   if (countMembers(state) <= countGuests(state)) blockers.push('not_enough_members');
   if (state.players.some((p) => !p.connected)) blockers.push('players_absent');
-  if (state.players.some((p) => !p.ready)) blockers.push('players_not_ready');
+  // L'organisateur est compté prêt d'office : il n'a qu'un bouton « Lancer la partie ».
+  if (state.players.some((p) => p.id !== state.hostId && !p.ready)) blockers.push('players_not_ready');
   if (state.library.iconic.length < n * c.minIconicPerPlayer) blockers.push('not_enough_photos');
   return blockers;
 }
