@@ -25,7 +25,7 @@ export default {
     const path = url.pathname;
 
     if (path === '/api/health') {
-      return json({ ok: true, game: 'Des Snaps et des Cons', version: '0.2.0' });
+      return json({ ok: true, game: 'Des Snaps et des Cons', version: '0.3.0' });
     }
 
     if (path.startsWith('/ws/')) {

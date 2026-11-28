@@ -59,7 +59,7 @@ export function voteAll(state: GameState, noteFor: (voter: string, author: strin
     for (const voter of ids(state)) {
       if (voter === author) continue;
       const note = noteFor(voter, author);
-      if (note !== null) expectOk(act(state, voter, { type: 'vote', authorId: author, note }));
+      if (note !== null) expectOk(act(state, voter, { type: 'vote', index: cursor, note }));
     }
     if (state.phase === 'vote' && round.voteCursor === cursor) tick(state, state.deadline!);
   }

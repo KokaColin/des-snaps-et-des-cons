@@ -11,33 +11,33 @@ Dernière mise à jour : 28 novembre 2026.
 ## Fait
 
 - Lot 1 terminé : mise en place, moteur de jeu pur (`src/shared/`), maquettes validées.
-- Lot 2 (cœur multijoueur), en attente de validation :
-  - **Comptes** (`src/server/group.ts`) : choix du nom parmi les 7, mot de passe créé à la première connexion (PBKDF2-SHA256, 100 000 itérations, calculé dans le Durable Object), session d'un an en cookie `HttpOnly`, plusieurs appareils, limitation des tentatives (5 erreurs par membre ou 20 par adresse IP en 15 min → blocage), réinitialisation par le mainteneur (voir `DEPLOIEMENT.md`).
-  - **Photothèque** (`group.ts` + `src/client/screens/Library.svelte`) : envoi multiple, compression dans le navigateur (1600 px WebP + miniature 400 px, JPEG en repli), doublons exacts refusés (empreinte du fichier d'origine), catégories Iconique / Fauto (« screen random »), filtres, tri, plein écran, corbeille 30 jours (purge par alarme, photos légendaires conservées), export zip fait dans le navigateur.
-  - **Salon temps réel** (`src/server/game-room.ts`) : WebSocket avec hibernation, état du moteur en SQLite à chaque changement, une alarme sur l'échéance la plus proche (`nextWakeAt`, présence, expiration 2 h), `tick()` à chaque alarme et (dé)connexion, chaque joueur ne reçoit que `viewFor()`. Jeton par appareil, reconnexion au bon écran, présence par pings (« absent » après 5 s), organisateur remplacé.
-  - Écrans : accueil, connexion, rejoindre, salon (maquette), photothèque. Pendant la partie, écran provisoire (manche, phase, chrono, joueurs) en attendant le lot 3.
+- Lot 2 terminé (fusionné le 28 novembre 2026) : comptes, photothèque, salon temps réel.
+- Lot 3 (jeu complet), en attente de validation :
+  - **Rendu des memes** (`src/client/lib/meme-render.ts`) : un seul code dessine sur canvas l'aperçu de l'éditeur, les memes du vote, des résultats, du récap et l'image téléchargée. L'aperçu est donc l'image finale.
+  - **Éditeur** (`screens/game/Editor.svelte`) : modèle haut/bas, 3 zones déplaçables au doigt, Classique / Bandeau Snap, A−/A+, 8 couleurs, changer d'image (1 fois, jamais une Fauto), brouillon envoyé au serveur au fil de l'eau (à la fin du chrono, le meme part tel quel), écran d'attente, bandeau « X t'a envoyé une Fauto ! ».
+  - **Vote** : meme « auteur : mystère », grande note à paliers (0 triste, gris → crème, jaune → orange, 22 « LÉGENDAIRE ! » avec explosion), curseur, « c'est le tien », compteur « x/y ont noté ».
+  - **Résultats** : polaroïds classés, score tagué, tampons « 22 · prénom », notes de chaque votant, « Fauto de X », mention légendaire ; autocollant FAUTO ! pour le détenteur (activer → roulette → photo + cible → envoi, annulation avec avertissement), « N Fauto en circulation » pour les autres.
+  - **Annonces** entre les manches (« DERNIÈRE MANCHE » plus forte), **fin de partie** : révélation du dernier au premier, podium, 3 badges gwero, récap horizontal de tous les memes avec téléchargement, revanche.
+  - **Enregistrement** (`src/shared/record.ts` + `Group.recordGame`) : chaque partie terminée est gardée une fois (tables `games` et `memes`, votants avec mention invité) ; la photo d'un meme légendaire est marquée et n'est jamais purgée. Base des profils et de la galerie du lot 4.
 
-## Décisions techniques prises au lot 2 (à valider avec la PR)
+## Décisions techniques (lots 2 et 3)
 
-- **Adresse des photos = autorisation** : `/api/photos/<id>/full` n'exige pas de compte ; l'identifiant est aléatoire (128 bits) et n'est donné qu'aux membres (liste) ou aux joueurs d'une partie qui utilise la photo. C'est ce qui permettra aux invités de voir les photos de leur partie sans accès à la photothèque.
-- **Présentation au salon par message** : le jeton de l'appareil et le pseudo d'invité sont envoyés dans le premier message WebSocket (`hello`), jamais dans l'adresse (qui peut finir dans des journaux).
-- **Le créateur entre en premier** : tant qu'il n'est pas dans le salon, personne d'autre ne peut entrer (il devient l'organisateur).
-- **Pings** : l'application envoie « ping » toutes les 2 s ; Cloudflare répond sans réveiller le Durable Object. Contrôle de présence toutes les 3 s tant que quelqu'un est connecté ; connexion muette depuis 20 s fermée (le joueur passe « déconnecté »).
-- Moteur : ajout de `heartbeat()` (signe de vie sans action) et de `phaseStartedAt` dans la vue (anneau du chrono).
+- **Adresse des photos = autorisation** : `/api/photos/<id>/full` n'exige pas de compte ; l'identifiant est aléatoire (128 bits) et n'est donné qu'aux membres (liste) ou aux joueurs d'une partie qui utilise la photo (invités compris).
+- **Présentation au salon par message** : jeton de l'appareil et pseudo d'invité dans le premier message WebSocket (`hello`), jamais dans l'adresse.
+- **Le créateur entre en premier** dans son salon.
+- **Pings** toutes les 2 s, contrôle de présence toutes les 3 s ; connexion muette depuis 20 s fermée. Un joueur resté « connecté » sans aucune connexion (redémarrage du serveur lors d'une mise en ligne) passe déconnecté au bout de 20 s.
+- **Vote anonyme** : le client désigne le meme par sa position dans l'ordre de passage (`{ type: 'vote', index, note }`), jamais par son auteur, qu'il ne connaît pas. Pendant le vote, la liste des joueurs ne marque plus l'auteur comme « fait » (ça le trahissait).
+- Moteur : `heartbeat()`, `phaseStartedAt` dans la vue, compteurs de vote, `fauto.libraryEmpty`.
 
-## Prochaine étape : lot 3 (jeu complet)
+## Prochaine étape : lot 4 (finition)
 
-1. Écrans de jeu selon les maquettes : Éditeur (modèle haut/bas, 3 zones, styles, 8 couleurs, changer d'image), Attente, Vote (curseur 0–22 à paliers), Résultats (+ autocollant Fauto), Annonces, Fin de partie (podium, badges, récap, téléchargement, revanche).
-2. Fauto côté interface (activation, roulette, cible, prévenir la cible).
-3. Fin de partie côté serveur : enregistrer memes, statistiques et memes légendaires dans `Group` (marquer `legendary` sur la photo).
-4. Critère : parties à 3 et à 7 de bout en bout.
+Feuille de route du cahier : étapes 8 (habillage : iPhone, Android, ordinateur, ajout à l'écran d'accueil / PWA), 9 (profils, XP, galerie légendaire — les données sont déjà enregistrées) et 10 (tests complets et documentation).
 
 ## Points d'attention
 
 - Une limite de CPU courte s'applique aux Workers gratuits : le hachage des mots de passe se fait dans le Durable Object `Group`.
 - Toujours passer par `view.ts` pour ce qui part vers un téléphone.
 - Les photos de test seront fournies plus tard par le mainteneur.
-- Les écrans du salon pendant la partie (`InGame.svelte`) sont provisoires et seront remplacés au lot 3.
 
 ## Tester en local
 
@@ -45,4 +45,4 @@ Dernière mise à jour : 28 novembre 2026.
 npm run dev:worker   # construit l'application puis lance le serveur sur http://localhost:8787
 ```
 
-Les données locales (comptes, photos, parties) vivent dans `.wrangler/state` ; supprimer ce dossier repart de zéro.
+Les données locales (comptes, photos, parties) vivent dans `.wrangler/state` ; supprimer ce dossier repart de zéro. Attention : reconstruire l'application (`npm run build`) pendant que `wrangler dev` tourne redémarre le serveur local et coupe les connexions (l'application se reconnecte toute seule).

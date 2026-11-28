@@ -1,5 +1,5 @@
 <script lang="ts">
-  // Chrono : anneau qui se vide + chiffres Bangers, rose sous 10 s.
+  // Chrono : petit anneau qui se vide + chiffres Bangers (m:ss), rose sous 10 s.
   let { deadline, start, now }: { deadline: number; start: number; now: () => number } = $props();
   let current = $state(0);
   $effect(() => {
@@ -10,51 +10,44 @@
 
   const remainingMs = $derived(Math.max(0, deadline - current));
   const seconds = $derived(Math.ceil(remainingMs / 1000));
-  const total = $derived(Math.max(1, deadline - start));
-  const progress = $derived(Math.min(1, remainingMs / total));
-  const R = 26;
-  const C = 2 * Math.PI * R;
+  const label = $derived(`${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`);
+  const progress = $derived(Math.min(1, remainingMs / Math.max(1, deadline - start)));
+  const C = 2 * Math.PI * 12;
 </script>
 
-<div class="clock" class:hurry={seconds <= 10} role="timer" aria-label="{seconds} secondes restantes">
-  <svg viewBox="0 0 64 64" width="64" height="64" aria-hidden="true">
-    <circle cx="32" cy="32" r={R} class="track" />
-    <circle cx="32" cy="32" r={R} class="ring" stroke-dasharray={C} stroke-dashoffset={C * (1 - progress)} />
+<span class="clock" class:hurry={seconds <= 10} role="timer" aria-label="Temps restant {label}">
+  <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true">
+    <circle cx="15" cy="15" r="12" class="track" />
+    <circle cx="15" cy="15" r="12" class="ring" stroke-dasharray="{C * progress} {C}" transform="rotate(-90 15 15)" />
   </svg>
-  <span>{seconds}</span>
-</div>
+  <span class="digits">{label}</span>
+</span>
 
 <style>
   .clock {
-    position: relative;
-    width: 64px;
-    height: 64px;
-    color: var(--yellow);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--paper);
   }
   .clock.hurry {
     color: var(--pink);
   }
-  svg {
-    transform: rotate(-90deg);
-  }
   circle {
     fill: none;
-    stroke-width: 6;
+    stroke-width: 4;
   }
   .track {
-    stroke: var(--band);
+    stroke: #3a3833;
   }
   .ring {
     stroke: currentColor;
-    transition: stroke-dashoffset 0.25s linear;
+    transition: stroke-dasharray 0.25s linear;
   }
-  span {
-    position: absolute;
-    inset: 0;
-    display: grid;
-    place-items: center;
+  .digits {
     font-family: var(--bangers);
     font-size: 26px;
-    letter-spacing: 1px;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
   }
 </style>

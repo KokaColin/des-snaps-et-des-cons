@@ -11,6 +11,7 @@ import {
   type PhotoInfo,
   type PhotosResponse,
 } from '../shared/protocol';
+import type { GameRecord } from '../shared/record';
 import type { LibrarySnapshot, PhotoCategory } from '../shared/types';
 import type { Env } from './env';
 import { hashPassword, randomToken, sha256Hex, timingSafeEqualText, verifyPassword } from './lib/crypto';
@@ -101,6 +102,31 @@ export class Group extends DurableObject<Env> {
         data BLOB NOT NULL,
         PRIMARY KEY (photo_id, kind)
       );
+      CREATE TABLE IF NOT EXISTS games (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        code TEXT NOT NULL,
+        started_at INTEGER NOT NULL,
+        ended_at INTEGER NOT NULL,
+        data TEXT NOT NULL
+      );
+      CREATE UNIQUE INDEX IF NOT EXISTS games_code_end ON games (code, ended_at);
+      CREATE TABLE IF NOT EXISTS memes (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        game_id INTEGER NOT NULL,
+        round INTEGER NOT NULL,
+        author_name TEXT NOT NULL,
+        author_member TEXT,
+        photo_id TEXT NOT NULL,
+        layers TEXT NOT NULL,
+        votes TEXT NOT NULL,
+        score_n INTEGER NOT NULL,
+        score_d INTEGER NOT NULL,
+        legendary INTEGER NOT NULL,
+        imposed_by TEXT,
+        created_at INTEGER NOT NULL
+      );
+      CREATE INDEX IF NOT EXISTS memes_author ON memes (author_member);
+      CREATE INDEX IF NOT EXISTS memes_legendary ON memes (legendary);
     `);
   }
 
@@ -133,6 +159,52 @@ export class Group extends DurableObject<Env> {
     for (const id of new Set(photoIds)) {
       this.sql.exec('UPDATE photos SET uses = uses + 1, last_played_at = ? WHERE id = ?', at, id);
     }
+  }
+
+  /**
+   * Partie terminée : on garde la partie, chaque meme (avec les noms des votants, mention invité
+   * comprise) et on marque « légendaire » les photos des memes 100 % de 22 (jamais purgées).
+   * Appelé une seule fois par partie ; un second appel identique est ignoré.
+   */
+  async recordGame(record: GameRecord): Promise<boolean> {
+    const inserted = this.sql.exec(
+      'INSERT OR IGNORE INTO games (code, started_at, ended_at, data) VALUES (?, ?, ?, ?)',
+      record.code,
+      record.startedAt,
+      record.endedAt,
+      JSON.stringify(record),
+    ).rowsWritten;
+    if (inserted === 0) return false;
+    const gameId = Number(this.sql.exec('SELECT last_insert_rowid() AS id').one().id);
+    const byId = new Map(record.players.map((p) => [p.id, p]));
+    this.ctx.storage.transactionSync(() => {
+      for (const m of record.memes) {
+        const author = byId.get(m.authorId);
+        const votes = Object.entries(m.votes).map(([id, note]) => ({
+          name: byId.get(id)?.name ?? '?',
+          guest: byId.get(id)?.kind === 'guest',
+          note,
+        }));
+        this.sql.exec(
+          `INSERT INTO memes (game_id, round, author_name, author_member, photo_id, layers, votes, score_n, score_d, legendary, imposed_by, created_at)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          gameId,
+          m.round,
+          author?.name ?? '?',
+          author?.member ?? null,
+          m.photoId,
+          JSON.stringify(m.layers),
+          JSON.stringify(votes),
+          m.score.n,
+          m.score.d,
+          m.legendary ? 1 : 0,
+          m.imposedBy ? (byId.get(m.imposedBy)?.name ?? null) : null,
+          record.endedAt,
+        );
+        if (m.legendary) this.sql.exec('UPDATE photos SET legendary = 1 WHERE id = ?', m.photoId);
+      }
+    });
+    return true;
   }
 
   // -------------------------------------------------------------------------------------------
