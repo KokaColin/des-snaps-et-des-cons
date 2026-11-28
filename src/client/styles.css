@@ -1,0 +1,274 @@
+/* Direction artistique : docs/DIRECTION-ARTISTIQUE.md (fanzine sur table de bar + graffiti punk). */
+:root {
+  --bg: #17161b;
+  --paper: #f3ecdc;
+  --ink: #17161b;
+  --yellow: #ffe433;
+  --tape: rgba(255, 228, 51, 0.85);
+  --pink: #ff4d8d;
+  --red: #e63b2e;
+  --violet: #2b1340;
+  --band: #2a2730;
+  --text-2: #d8d0bd;
+  --text-3: #a39b88;
+  --text-4: #6b6558;
+  --ok: #1f8a3a;
+  --ko: #c0392b;
+  --bangers: Bangers, Impact, sans-serif;
+  --archivo: Archivo, system-ui, sans-serif;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background-color: var(--bg);
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 5px 5px;
+  color: var(--paper);
+  font-family: var(--archivo);
+  font-weight: 500;
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  color: var(--paper);
+}
+a:hover {
+  color: var(--yellow);
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+.screen {
+  width: 100%;
+  max-width: 480px;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: max(20px, env(safe-area-inset-top)) 16px max(20px, env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.screen.wide {
+  max-width: 1100px;
+}
+
+/* Titre de haut de page */
+.punk {
+  display: inline-block;
+  margin: 0;
+  font-family: var(--bangers);
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  line-height: 1;
+  color: var(--paper);
+  text-shadow: 1px 1px 0 var(--pink), -1px 0 0 var(--yellow);
+  transform: skew(-8deg) rotate(-2deg);
+}
+.punk small {
+  font-size: 0.62em;
+}
+
+/* Gros boutons */
+.big {
+  min-height: 62px;
+  width: 100%;
+  padding: 6px 16px;
+  border: 0;
+  font-family: var(--bangers);
+  font-size: 30px;
+  letter-spacing: 2px;
+  line-height: 1;
+  color: var(--ink);
+  background: var(--yellow);
+  transform: skew(-6deg) rotate(-1deg);
+  box-shadow: 6px 6px 0 #000;
+  transition:
+    transform 0.08s,
+    box-shadow 0.08s;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+.big.pink {
+  background: var(--pink);
+}
+.big.paper {
+  background: var(--paper);
+}
+.big:active:not(:disabled) {
+  transform: skew(-6deg) rotate(-1deg) translate(4px, 4px);
+  box-shadow: 2px 2px 0 #000;
+}
+.big:disabled {
+  background: transparent;
+  color: #8a8373;
+  border: 3px dashed #5a554b;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+.big .count {
+  padding: 2px 8px;
+  border: 2px solid currentColor;
+  font-size: 20px;
+}
+
+/* Boutons secondaires */
+.ghost {
+  min-height: 48px;
+  padding: 8px 14px;
+  border: 2px solid var(--paper);
+  background: transparent;
+  color: var(--paper);
+  font-weight: 700;
+  font-size: 15px;
+  box-shadow: 3px 3px 0 var(--yellow);
+  cursor: pointer;
+}
+.ghost:active:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--yellow);
+}
+.ghost:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.ghost.selected {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.link {
+  align-self: center;
+  padding: 8px;
+  border: 0;
+  background: none;
+  color: var(--text-3);
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.link:hover {
+  color: var(--yellow);
+}
+
+/* Champs */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--text-2);
+}
+.field input,
+.field select {
+  min-height: 50px;
+  padding: 8px 12px;
+  border: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 18px;
+  box-shadow: 3px 3px 0 #000;
+}
+.field input:focus-visible,
+.field select:focus-visible {
+  outline: 3px solid var(--yellow);
+  outline-offset: 2px;
+}
+.hint {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-3);
+}
+.error {
+  margin: 0;
+  padding: 8px 12px;
+  background: var(--band);
+  border-left: 4px solid var(--pink);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* Bandes de papier (lignes de joueurs) */
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  padding: 4px 12px;
+  background: var(--paper);
+  color: #1a1916;
+  box-shadow: 3px 3px 0 #000;
+}
+.av {
+  width: 34px;
+  height: 34px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  font-family: var(--bangers);
+  letter-spacing: 1px;
+  font-size: 18px;
+  color: #1a1916;
+}
+.stamp {
+  font-family: var(--bangers);
+  letter-spacing: 1px;
+  font-size: 13px;
+  padding: 2px 6px;
+  border: 2px solid currentColor;
+  transform: rotate(-6deg);
+}
+
+/* Papier scotché */
+.taped {
+  position: relative;
+  padding: 10px 24px 8px;
+  background: var(--paper);
+  color: var(--ink);
+  transform: rotate(-1.5deg);
+  box-shadow: 4px 4px 0 #000;
+}
+.taped::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  width: 92px;
+  height: 22px;
+  margin-left: -46px;
+  background: var(--tape);
+  transform: rotate(3deg);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
