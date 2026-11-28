@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Fin de partie</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Bangers&family=Archivo:wght@500;700;900&display=swap">
+<style>
+body{margin:0}
+a{color:#f3ecdc}a:hover{color:#ffe433}
+.step{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:6px;background:#f3ecdc;color:#17161b;box-shadow:3px 3px 0 #000;font-family:Bangers,Impact,sans-serif}
+.pts{display:inline-block;font-family:Bangers,Impact,sans-serif;font-size:22px;letter-spacing:1.5px;line-height:1;color:#ffe433;transform:skew(-8deg) rotate(-2deg)}
+.badge{display:flex;align-items:center;gap:10px;min-height:44px;padding:6px 16px;background:#2a2730;clip-path:polygon(0 12%,4% 0,38% 6%,71% 0,100% 8%,97% 48%,100% 92%,66% 100%,30% 94%,2% 100%,3% 55%)}
+.badge:nth-child(2){transform:rotate(0.8deg)}
+.badge:nth-child(odd){transform:rotate(-0.6deg)}
+.bn{font-family:Bangers,Impact,sans-serif;letter-spacing:1px;font-size:18px;line-height:1.1;text-transform:uppercase;letter-spacing:0.5px;padding:4px 11px;transform:skew(-6deg) rotate(-3deg);clip-path:polygon(4% 0,52% 7%,97% 2%,100% 48%,96% 100%,45% 93%,1% 97%,0 40%)}
+.punk{display:inline-block;font-family:Bangers,Impact,sans-serif;font-weight:400;letter-spacing:1.5px;color:#f3ecdc;text-shadow:1px 1px 0 #ff4d8d,-1px 0 0 #ffe433;transform:skew(-8deg) rotate(-2deg)}
+.burst{clip-path:polygon(50% 0%,61% 17%,83% 7%,79% 29%,100% 32%,85% 49%,99% 68%,77% 71%,82% 94%,61% 83%,49% 100%,38% 82%,15% 93%,22% 70%,0% 64%,16% 47%,2% 28%,23% 27%,19% 5%,39% 17%)}
+.big{min-height:62px;border:0;font-family:Bangers,Impact,sans-serif;font-size:30px;letter-spacing:2px;line-height:1;color:#17161b;transform:skew(-6deg) rotate(-1deg);box-shadow:6px 6px 0 #000;transition:transform .08s,box-shadow .08s;cursor:pointer}
+.big:active{transform:skew(-6deg) rotate(-1deg) translate(4px,4px);box-shadow:2px 2px 0 #000}
+.big:disabled{background:transparent;color:#8a8373;border:3px dashed #5a554b;box-shadow:none;cursor:not-allowed}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; padding: 22px 20px 22px; display: flex; flex-direction: column; gap: 12px; background-color: #17161b; background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 5px 5px; font-family: Archivo, system-ui, sans-serif; color: #f3ecdc; overflow: hidden">
+
+<div style="display: flex; gap: 6px; align-items: center; justify-content: center">
+<span style="padding: 2px 8px; background: #f3ecdc; color: #17161b; font-family: Bangers, Impact, sans-serif; font-size: 40px; letter-spacing: 2px; line-height: 1; transform: skew(-8deg) rotate(-4deg); box-shadow: 4px 4px 0 #000">FIN</span>
+<span style="padding: 2px 8px; background: #ff4d8d; color: #17161b; font-family: Bangers, Impact, sans-serif; font-size: 40px; letter-spacing: 2px; line-height: 1; transform: skew(-8deg) rotate(3deg); box-shadow: 4px 4px 0 #000">DE PARTIE</span>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; align-items: end; margin-top: 6px">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 4px">
+<span style="font-weight: 900; font-size: 16px">Maxe</span>
+<span class="pts">44,5 <span style="font-size: 0.6em">PTS</span></span>
+<div class="step" style="height: 80px; width: 100%; font-size: 38px">2</div>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 4px">
+<span style="font-weight: 900; font-size: 18px">Gasdard</span>
+<span class="pts">54,8 <span style="font-size: 0.6em">PTS</span></span>
+<div class="step" style="height: 110px; width: 100%; font-size: 52px; background: #ffe433; box-shadow: 4px 4px 0 #ff4d8d">1</div>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 4px">
+<span style="font-weight: 900; font-size: 16px">Jean Mi</span>
+<span class="pts">38,0 <span style="font-size: 0.6em">PTS</span></span>
+<div class="step" style="height: 60px; width: 100%; font-size: 32px">3</div>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div class="badge"><svg width="30" height="30" viewBox="0 0 30 30" role="img" aria-label="Couronne : le plus de points" style="flex: none"><path d="M4 21L5.5 8.5L11 14.5L15 5.5L19 14.5L24.5 8.5L26 21Z" fill="#ffe433"></path><rect x="4" y="22.5" width="22" height="3.5" fill="#ffe433"></rect></svg><span style="display: inline-flex; filter: drop-shadow(2px 2px 0 #000)"><span class="bn" style="background: #ffe433; color: #17161b">goofy ass gwero</span></span><span style="margin-left: auto; display: flex; flex-direction: column; align-items: flex-end; line-height: 1.15"><span style="font-weight: 900">Gasdard</span><span class="pts" style="font-size: 18px; white-space: nowrap">54,8 <span style="font-size: 0.6em">PTS</span></span></span></div>
+<div class="badge"><svg width="30" height="30" viewBox="0 0 30 30" role="img" aria-label="Pièce cassée : le moins de points" style="flex: none"><path d="M14 3.5A11.5 11.5 0 0 0 14 26.5L16 20L12.5 15L16 9.5Z" fill="#f3ecdc"></path><path d="M17.5 4A11.5 11.5 0 0 1 17.5 26L19.5 19.5L16 15L19.5 9.5Z" fill="#f3ecdc" transform="translate(1.5 1) rotate(6 22 15)"></path></svg><span style="display: inline-flex; filter: drop-shadow(2px 2px 0 #000)"><span class="bn" style="background: #f3ecdc; color: #17161b">broke ass gwero</span></span><span style="margin-left: auto; display: flex; flex-direction: column; align-items: flex-end; line-height: 1.15"><span style="font-weight: 900">Gaslard</span><span class="pts" style="font-size: 18px; white-space: nowrap">19,6 <span style="font-size: 0.6em">PTS</span></span></span></div>
+<div class="badge"><svg width="30" height="30" viewBox="0 0 30 30" role="img" aria-label="Rat : le plus radin dans ses notes" style="flex: none"><path d="M7 21.5C3 21 1.5 24.5 4 26.5C6 28 9.5 27 12 25.5" fill="none" stroke="#f3ecdc" stroke-width="1.8" stroke-linecap="round"></path><path d="M6 21.5C6 15 11 11.5 17 12C21 12.3 24 14.5 26 17.2L28.5 18.6L26 20C24.5 21.6 21.5 22.5 17.5 22.5H8C6.8 22.5 6 22.2 6 21.5Z" fill="#f3ecdc"></path><circle cx="19" cy="11" r="3.4" fill="#f3ecdc"></circle><circle cx="19" cy="11" r="1.8" fill="#e63b2e"></circle><circle cx="23.3" cy="16.3" r="1.1" fill="#17161b"></circle><circle cx="28.4" cy="18.6" r="1.1" fill="#e63b2e"></circle><path d="M11 22.5V25M19 22.5V25" stroke="#f3ecdc" stroke-width="1.8" stroke-linecap="round"></path></svg><span style="display: inline-flex; filter: drop-shadow(2px 2px 0 #000)"><span class="bn" style="background: #e63b2e; color: #f3ecdc">shame ass gwero</span></span><span style="margin-left: auto; display: flex; flex-direction: column; align-items: flex-end; line-height: 1.15"><span style="font-weight: 900">Raffael</span><span class="pts" style="font-size: 18px; white-space: nowrap">6,2 <span style="font-size: 0.6em">DE MOYENNE</span></span></span></div>
+</div>
+
+<div style="display: flex; justify-content: space-between; align-items: baseline">
+<span class="punk" style="font-size: 30px">TOUS LES MEMES</span>
+<span style="font-family: Archivo, sans-serif; font-weight: 600; font-size: 13px; color: #d8d0bd">15 · du meilleur au pire</span>
+</div>
+
+<div style="margin-right: -20px; overflow: hidden; padding: 28px 0 4px 6px; margin-top: -8px">
+<div style="display: flex; gap: 26px; width: max-content">
+<div style="position: relative; width: 200px; padding: 7px 7px 8px; background: #f3ecdc; color: #17161b; transform: rotate(-1.5deg); box-shadow: 4px 4px 0 #000; display: flex; flex-direction: column; gap: 6px">
+<div style="height: 168px; background-color: #3a3530; background-image: repeating-linear-gradient(135deg, rgba(255,255,255,0.04) 0 10px, transparent 10px 20px); display: grid; place-items: center">
+<span style="font-family: Archivo, sans-serif; font-weight: 600; font-size: 11px; color: #b9b19f">[ meme ]</span>
+</div>
+<span style="position: absolute; top: -22px; right: -6px; display: flex; align-items: baseline; font-size: 42px; color: #ffe433; font-family: Bangers, Impact, sans-serif; line-height: 1.15; letter-spacing: 2px; -webkit-text-stroke: 5px #000; paint-order: stroke fill; text-shadow: 3px 3px 0 #ff4d8d; transform: skew(-5deg) rotate(6deg)">21,5<span style="font-size: 0.42em">/22</span></span>
+<span style="position: absolute; top: 120px; left: -12px; padding: 1px 5px; border: 2px solid #e63b2e; color: #e63b2e; background: #f3ecdc; font-family: Archivo, sans-serif; font-weight: 600; font-size: 13px; transform: rotate(-12deg)">22 · Maxe</span>
+<span style="position: absolute; top: 146px; right: -10px; padding: 1px 5px; border: 2px solid #e63b2e; color: #e63b2e; background: #f3ecdc; font-family: Archivo, sans-serif; font-weight: 600; font-size: 13px; transform: rotate(7deg)">22 · Raffael</span>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 6px">
+<span style="display: flex; flex-direction: column"><span style="font-weight: 900; font-size: 17px">Gasdard</span><span style="font-family: Archivo, sans-serif; font-weight: 600; font-size: 12px; color: #4a453c">manche 3</span></span>
+<button aria-label="Télécharger ce meme" style="width: 44px; height: 44px; flex: none; display: grid; place-items: center; border: 0; background: #ffe433; padding: 0"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3V13M5.5 9L10 13.5L14.5 9M4 17H16" fill="none" stroke="#17161b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+</div>
+</div>
+<div style="position: relative; width: 200px; padding: 7px 7px 8px; background: #f3ecdc; color: #17161b; transform: rotate(1.5deg); box-shadow: 4px 4px 0 #000; display: flex; flex-direction: column; gap: 6px">
+<div style="height: 168px; background-color: #3a3530; background-image: repeating-linear-gradient(135deg, rgba(255,255,255,0.04) 0 10px, transparent 10px 20px)"></div>
+<span style="position: absolute; top: -22px; right: -6px; display: flex; align-items: baseline; font-size: 42px; color: #f3ecdc; font-family: Bangers, Impact, sans-serif; line-height: 1.15; letter-spacing: 2px; -webkit-text-stroke: 5px #000; paint-order: stroke fill; text-shadow: 3px 3px 0 #ff4d8d; transform: skew(-5deg) rotate(-5deg)">19,0<span style="font-size: 0.42em">/22</span></span>
+<span style="font-weight: 900; font-size: 17px; min-height: 44px">Maxe</span>
+</div>
+</div>
+</div>
+
+<span style="align-self: center; font-family: Bangers, Impact, sans-serif; font-size: 18px; line-height: 1">1 <span style="color: #a39b88">/ 15</span></span>
+
+<button class="big" style="margin-top: auto; background: #ff4d8d">Revanche !</button>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

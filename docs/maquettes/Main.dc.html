@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Salon</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Bangers&family=Archivo:wght@500;700;900&display=swap">
+<style>
+body{margin:0}
+a{color:#f3ecdc}a:hover{color:#ffe433}
+.cut{display:inline-block;padding:2px 5px;font-family:Bangers,Impact,sans-serif;letter-spacing:1px;line-height:1;box-shadow:2px 2px 0 #000}
+.row{display:flex;align-items:center;gap:12px;min-height:44px;padding:4px 12px;background:#f3ecdc;color:#1a1916;box-shadow:3px 3px 0 #000}
+.av{width:34px;height:34px;flex:none;display:grid;place-items:center;font-family:Bangers,Impact,sans-serif;letter-spacing:1px;font-size:18px;color:#1a1916;border:0}
+.stamp{font-family:Bangers,Impact,sans-serif;letter-spacing:1px;font-size:13px;padding:2px 6px;border:2px solid currentColor;transform:rotate(-6deg)}
+.punk{display:inline-block;font-family:Bangers,Impact,sans-serif;font-weight:400;letter-spacing:1.5px;color:#f3ecdc;text-shadow:1px 1px 0 #ff4d8d,-1px 0 0 #ffe433;transform:skew(-8deg) rotate(-2deg)}
+.burst{clip-path:polygon(50% 0%,61% 17%,83% 7%,79% 29%,100% 32%,85% 49%,99% 68%,77% 71%,82% 94%,61% 83%,49% 100%,38% 82%,15% 93%,22% 70%,0% 64%,16% 47%,2% 28%,23% 27%,19% 5%,39% 17%)}
+.big{min-height:62px;border:0;font-family:Bangers,Impact,sans-serif;font-size:30px;letter-spacing:2px;line-height:1;color:#17161b;transform:skew(-6deg) rotate(-1deg);box-shadow:6px 6px 0 #000;transition:transform .08s,box-shadow .08s;cursor:pointer}
+.big:active{transform:skew(-6deg) rotate(-1deg) translate(4px,4px);box-shadow:2px 2px 0 #000}
+.big:disabled{background:transparent;color:#8a8373;border:3px dashed #5a554b;box-shadow:none;cursor:not-allowed}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; padding: 20px 20px 20px; display: flex; flex-direction: column; gap: 10px; background-color: #17161b; background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 5px 5px; font-family: Archivo, system-ui, sans-serif; color: #f3ecdc; overflow: hidden">
+
+<div style="position: relative; height: 128px; flex: none" aria-label="Des Snaps et des Cons">
+<svg width="362" height="128" viewBox="0 0 362 128" aria-hidden="true" style="position: absolute; left: -6px; top: 0"><polygon points="357.0,64.0 314.8,74.6 339.6,90.5 282.8,92.1 290.7,111.7 243.6,109.1 220.2,123.5 181.0,111.6 141.8,123.5 124.5,104.7 71.3,111.7 68.2,95.2 22.4,90.5 47.2,74.6 5.0,64.0 54.0,54.0 22.4,37.5 68.2,32.8 71.3,16.3 121.4,21.1 141.8,4.5 181.0,18.9 220.2,4.5 243.6,18.9 290.7,16.3 288.3,34.3 339.6,37.5 308.0,54.0" fill="#2b1340" stroke="#ff4d8d" stroke-width="2.5" stroke-linejoin="miter"></polygon></svg>
+<span style="position: absolute; left: 26px; top: 14px; display: flex; align-items: flex-end; font-family: Bangers, Impact, sans-serif; line-height: 0.9; color: #ffe433; -webkit-text-stroke: 8px #000; paint-order: stroke fill; text-shadow: 5px 5px 0 #ff4d8d; transform: skew(-10deg) rotate(-7deg)"><span style="display: inline-block; font-size: 72px; transform: rotate(-6deg)">S</span><span style="display: inline-block; font-size: 58px; transform: rotate(4deg)">N</span><span style="display: inline-block; font-size: 66px; transform: rotate(-3deg)">A</span><span style="display: inline-block; font-size: 56px; transform: rotate(6deg)">P</span><span style="display: inline-block; font-size: 74px; transform: rotate(-4deg)">S</span></span>
+<span style="position: absolute; left: 186px; top: 42px; display: flex; align-items: flex-end; font-family: Bangers, Impact, sans-serif; line-height: 0.9; color: #ff4d8d; -webkit-text-stroke: 8px #000; paint-order: stroke fill; text-shadow: -5px 5px 0 #ffe433; transform: skew(-10deg) rotate(5deg)"><span style="display: inline-block; font-size: 76px; transform: rotate(5deg)">C</span><span style="display: inline-block; font-size: 60px; transform: rotate(-5deg)">O</span><span style="display: inline-block; font-size: 68px; transform: rotate(3deg)">N</span><span style="display: inline-block; font-size: 80px; transform: rotate(-4deg)">S</span></span>
+<span class="burst" style="position: absolute; left: 152px; top: 54px; width: 44px; height: 44px; display: grid; place-items: center; background: #f3ecdc; color: #17161b; font-family: Bangers, Impact, sans-serif; font-size: 24px">&amp;</span>
+<span style="position: absolute; left: 12px; top: 4px; padding: 2px 7px; background: #17161b; color: #f3ecdc; border: 2px solid #f3ecdc; font-family: Archivo, sans-serif; font-weight: 600; font-size: 14px; transform: rotate(-10deg)">des</span>
+<span style="position: absolute; left: 196px; top: 30px; padding: 2px 7px; background: #17161b; color: #f3ecdc; border: 2px solid #f3ecdc; font-family: Archivo, sans-serif; font-weight: 600; font-size: 14px; transform: rotate(8deg)">des</span>
+</div>
+
+<div style="position: relative; align-self: center; margin-top: 4px; padding: 10px 24px 8px; background: #f3ecdc; color: #17161b; transform: rotate(-1.5deg); box-shadow: 4px 4px 0 #000; display: flex; flex-direction: column; align-items: center; gap: 2px">
+<div style="position: absolute; top: -12px; left: 50%; width: 92px; height: 22px; margin-left: -46px; background: rgba(255,228,51,0.85); transform: rotate(3deg)"></div>
+<span style="font-family: Archivo, sans-serif; font-weight: 600; font-size: 13px">code de la partie</span>
+<span style="font-family: Bangers, Impact, sans-serif; font-size: 40px; letter-spacing: 6px; line-height: 1.05">KXQBZ</span>
+</div>
+
+<div style="display: flex; gap: 10px">
+<button style="flex: 1; min-height: 48px; border: 2px solid #f3ecdc; background: transparent; color: #f3ecdc; font: 700 15px Archivo, sans-serif; box-shadow: 3px 3px 0 #ffe433">Partager le lien</button>
+<button style="flex: 1; min-height: 48px; border: 2px solid #f3ecdc; background: transparent; color: #f3ecdc; font: 700 15px Archivo, sans-serif; box-shadow: 3px 3px 0 #ffe433">Copier le code</button>
+</div>
+
+<div style="display: flex; justify-content: space-between; align-items: baseline">
+<span class="punk" style="font-size: 34px">5 JOUEURS</span>
+<span style="font-family: Archivo, sans-serif; font-weight: 600; font-size: 14px; color: #d8d0bd">2 places · invités 1/3</span>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 7px">
+<div class="row" style="transform: rotate(-0.6deg)">
+<span class="av" style="background: #ffc23d">M</span>
+<span style="flex: 1; font-weight: 900; font-size: 17px">Maxe <span style="font-family: Archivo, sans-serif; font-weight: 600; font-weight: 400; font-size: 12px">· orga</span></span>
+<span class="stamp" style="color: #1f8a3a">PRÊT</span>
+</div>
+<div class="row" style="transform: rotate(0.5deg)">
+<span class="av" style="background: #6fdc7a">G</span>
+<span style="flex: 1; font-weight: 900; font-size: 17px">Gasdard</span>
+<span class="stamp" style="color: #1f8a3a">PRÊT</span>
+</div>
+<div class="row" style="transform: rotate(-0.3deg)">
+<span class="av" style="background: #a678ff">G</span>
+<span style="flex: 1; font-weight: 900; font-size: 17px">Gaslard</span>
+<span style="font-family: Archivo, sans-serif; font-weight: 600; font-size: 13px; color: #6b6558">pas encore prêt</span>
+</div>
+<div class="row" style="transform: rotate(0.7deg)">
+<span class="av" style="background: #3ec6e0">R</span>
+<span style="flex: 1; font-weight: 900; font-size: 17px">Raffael</span>
+<span class="stamp" style="color: #c0392b">ABSENT</span>
+</div>
+<div class="row" style="transform: rotate(-0.4deg)">
+<span class="av" style="background: #f3ecdc; border: 2px dashed #8f8a7f">J</span>
+<span style="flex: 1; font-weight: 900; font-size: 17px">Jean Mi <span style="font-family: Archivo, sans-serif; font-weight: 600; font-weight: 400; font-size: 12px">· invité</span></span>
+<span class="stamp" style="color: #1f8a3a">PRÊT</span>
+</div>
+<div style="min-height: 38px; border: 2px dashed rgba(243,236,220,0.35); display: grid; place-items: center; font-family: Archivo, sans-serif; font-weight: 600; font-size: 13px; color: #b9b19f">place libre</div>
+</div>
+
+<div style="margin-top: auto; display: flex; flex-direction: column; gap: 10px">
+<p style="margin: 0; font-family: Archivo, sans-serif; font-weight: 600; font-size: 13px; color: #d8d0bd; text-align: center">En attente de Gaslard et Raffael</p>
+<button class="big" disabled style="display: flex; align-items: center; justify-content: center; gap: 12px">Lancer la partie <span style="padding: 2px 8px; border: 2px solid #8a8373; font-size: 20px">3/5 PRÊTS</span></button>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

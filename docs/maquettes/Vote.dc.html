@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Vote</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Bangers&amp;family=Archivo:wght@500;700;900&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#f3ecdc}a:hover{color:#ffe433}
+.meme{font-family:Anton,Impact,sans-serif;color:#fff;text-align:center;text-transform:uppercase;-webkit-text-stroke:1.5px #000;paint-order:stroke fill;text-shadow:2px 2px 0 #000}
+.quick{flex:1;min-height:48px;border:2px solid #f3ecdc;background:transparent;color:#f3ecdc;font:400 22px Anton,Impact,sans-serif}
+input[type=range]{accent-color:#ff4d8d}
+.punk{display:inline-block;font-family:Bangers,Impact,sans-serif;font-weight:400;letter-spacing:1.5px;color:#f3ecdc;text-shadow:1px 1px 0 #ff4d8d,-1px 0 0 #ffe433;transform:skew(-8deg) rotate(-2deg)}
+.burst{clip-path:polygon(50% 0%,61% 17%,83% 7%,79% 29%,100% 32%,85% 49%,99% 68%,77% 71%,82% 94%,61% 83%,49% 100%,38% 82%,15% 93%,22% 70%,0% 64%,16% 47%,2% 28%,23% 27%,19% 5%,39% 17%)}
+.big{min-height:62px;border:0;font-family:Bangers,Impact,sans-serif;font-size:30px;letter-spacing:2px;line-height:1;color:#17161b;transform:skew(-6deg) rotate(-1deg);box-shadow:6px 6px 0 #000;transition:transform .08s,box-shadow .08s;cursor:pointer}
+.big:active{transform:skew(-6deg) rotate(-1deg) translate(4px,4px);box-shadow:2px 2px 0 #000}
+.big:disabled{background:transparent;color:#8a8373;border:3px dashed #5a554b;box-shadow:none;cursor:not-allowed}
+input.note-range{-webkit-appearance:none;appearance:none;height:40px;background:transparent}
+input.note-range::-webkit-slider-runnable-track{height:12px;border:0;background:linear-gradient(90deg,#4a463e 0 4%,#8f8a7f 4.5%,#f3ecdc 50%,#ffe433 54%,#ff8a1f 92%,#ff4d8d 96%)}
+input.note-range::-moz-range-track{height:12px;border:0;background:linear-gradient(90deg,#4a463e 0 4%,#8f8a7f 4.5%,#f3ecdc 50%,#ffe433 54%,#ff8a1f 92%,#ff4d8d 96%)}
+input.note-range::-webkit-slider-thumb{-webkit-appearance:none;width:30px;height:30px;margin-top:-11px;background:#f3ecdc;border:0;box-shadow:3px 3px 0 #000;transform:rotate(45deg)}
+input.note-range::-moz-range-thumb{width:26px;height:26px;background:#f3ecdc;border:0;border-radius:0;box-shadow:3px 3px 0 #000;transform:rotate(45deg)}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; padding: 22px 20px 22px; display: flex; flex-direction: column; gap: 14px; background-color: #17161b; background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 5px 5px; font-family: Archivo, system-ui, sans-serif; color: #f3ecdc; overflow: hidden">
+
+<div style="display: flex; align-items: center; justify-content: space-between">
+<span class="punk" style="font-size: 32px">MEME 3<span style="font-size: 0.62em">/5</span></span>
+<span style="font-family: Archivo, sans-serif; font-weight: 600; font-size: 13px; color: #d8d0bd">2/4 ont noté</span>
+<span style="display: flex; align-items: center; gap: 8px" aria-label="Temps restant 0:09"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="12" fill="none" stroke="#3a3833" stroke-width="4"></circle><circle cx="15" cy="15" r="12" fill="none" stroke="#ff4d8d" stroke-width="4" stroke-dasharray="45.2 75.4" transform="rotate(-90 15 15)"></circle></svg><span style="font-family: Bangers, Impact, sans-serif; font-size: 26px; line-height: 1; color: #ff4d8d; font-variant-numeric: tabular-nums">0:09</span></span>
+</div>
+
+<div style="display: flex; gap: 6px" aria-hidden="true">
+<span style="flex: 1; height: 6px; background: #f3ecdc"></span>
+<span style="flex: 1; height: 6px; background: #f3ecdc"></span>
+<span style="flex: 1; height: 6px; background: #ff4d8d"></span>
+<span style="flex: 1; height: 6px; background: #3a3833"></span>
+<span style="flex: 1; height: 6px; background: #3a3833"></span>
+</div>
+
+<div style="position: relative; align-self: center; width: 300px; padding: 10px 10px 30px; background: #f3ecdc; transform: rotate(1.2deg); box-shadow: 5px 5px 0 #000">
+<div style="position: absolute; top: -12px; right: 22px; width: 76px; height: 22px; background: rgba(255,228,51,0.85); transform: rotate(6deg)"></div>
+<div style="position: relative; height: 340px; background-color: #3a3530; background-image: repeating-linear-gradient(135deg, rgba(255,255,255,0.04) 0 10px, transparent 10px 20px); display: grid; place-items: center">
+<span style="font-family: Archivo, sans-serif; font-weight: 600; font-size: 13px; color: #b9b19f">[ photo du groupe ]</span>
+<div class="meme" style="position: absolute; top: 12px; left: 10px; right: 10px; font-size: 28px; line-height: 1.05">Moi au 3e bar</div>
+<div class="meme" style="position: absolute; bottom: 12px; left: 10px; right: 10px; font-size: 24px; line-height: 1.05; color: #ffe433">« je rentre après celui-là »</div>
+</div>
+<span style="position: absolute; bottom: 6px; left: 12px; font-family: Archivo, sans-serif; font-weight: 600; font-size: 13px; color: #6b6558">auteur : mystère</span>
+</div>
+
+<div style="position: relative; height: 128px; display: flex; align-items: center; justify-content: center">
+<sc-if value="{{ isMax }}" hint-placeholder-val="{{ false }}">
+<svg width="300" height="128" viewBox="0 0 300 128" aria-hidden="true" style="position: absolute; left: 50%; top: 0; margin-left: -150px"><polygon points="150,2 166,40 206,10 192,50 248,30 212,62 290,64 214,74 252,104 196,86 210,126 166,92 150,126 134,92 90,126 104,86 48,104 86,74 10,64 88,62 52,30 108,50 94,10 134,40" fill="#ff4d8d"></polygon><polygon points="150,22 160,48 186,32 178,58 214,52 188,70 232,74 188,82 206,104 174,90 176,112 154,94 142,114 136,92 108,108 120,84 80,90 112,72 72,58 116,60 96,36 128,50 128,26 142,46" fill="#ffe433"></polygon></svg>
+</sc-if>
+<span style="position: relative; display: flex; align-items: baseline; gap: 6px; {{ numWrap }}">
+<span style="display: inline-block; font-family: Bangers, Impact, sans-serif; line-height: 0.9; letter-spacing: 4px; paint-order: stroke fill; {{ numStyle }}">{{ note }}</span>
+<span style="display: inline-block; font-size: 40px; font-family: Bangers, Impact, sans-serif; letter-spacing: 1px; -webkit-text-stroke: 5px #000; paint-order: stroke fill; color: #f3ecdc; transform: skew(-5deg)">/22</span>
+</span>
+</div>
+<p style="margin: -4px 0 0; min-height: 22px; text-align: center; font-family: Bangers, Impact, sans-serif; font-size: 20px; letter-spacing: 2px; {{ captionStyle }}">{{ caption }}</p>
+
+<label style="display: flex; flex-direction: column; gap: 4px">
+<span style="position: absolute; width: 1px; height: 1px; overflow: hidden">Ta note sur 22</span>
+<input type="range" min="0" max="22" step="1" value="{{ note }}" onChange="{{ onNote }}" class="note-range" style="width: 100%; margin: 0">
+</label>
+
+<button class="big" style="margin-top: auto; background: #ffe433">Valider ma note</button>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+constructor(props) { super(props); this.state = { note: 17 }; }
+renderVals() {
+const n = this.state.note;
+const lerp = (a, b, t) => Math.round(a + (b - a) * t);
+const mix = (c1, c2, t) => '#' + [0, 2, 4].map((i) => lerp(parseInt(c1.substr(i + 1, 2), 16), parseInt(c2.substr(i + 1, 2), 16), t).toString(16).padStart(2, '0')).join('');
+let numStyle, numWrap = '', caption = '', captionStyle = 'color: #8f8a7f';
+if (n === 0) {
+numStyle = 'font-size: 96px; color: #5a554b; -webkit-text-stroke: 4px #000; text-shadow: none; transform: skew(-2deg) rotate(6deg) translateY(10px)';
+caption = 'ZÉRO POINTÉ…';
+} else if (n <= 11) {
+const t = (n - 1) / 10;
+numStyle = 'font-size: ' + lerp(98, 108, t) + 'px; color: ' + mix('#8f8a7f', '#f3ecdc', t) + '; -webkit-text-stroke: 5px #000; text-shadow: ' + lerp(1, 4, t) + 'px ' + lerp(1, 4, t) + 'px 0 #ff4d8d; transform: skew(-5deg) rotate(' + (2 - 2 * t).toFixed(1) + 'deg)';
+} else if (n <= 21) {
+const t = (n - 12) / 9;
+numStyle = 'font-size: ' + lerp(110, 124, t) + 'px; color: ' + mix('#ffe433', '#ffb02e', t) + '; -webkit-text-stroke: 5px #000; text-shadow: ' + lerp(4, 7, t) + 'px ' + lerp(4, 7, t) + 'px 0 #ff4d8d; transform: skew(-6deg) rotate(' + (-1 - 3 * t).toFixed(1) + 'deg)';
+} else {
+numStyle = 'font-size: 136px; color: #ffe433; -webkit-text-stroke: 6px #000; text-shadow: 7px 7px 0 #ff4d8d, -4px -3px 0 #3ec6e0; transform: skew(-8deg) rotate(-6deg) scale(1.05)';
+numWrap = 'filter: drop-shadow(0 0 0 #000)';
+caption = 'LÉGENDAIRE !';
+captionStyle = 'color: #ffe433; text-shadow: 2px 2px 0 #ff4d8d';
+}
+return {
+note: n,
+numStyle: numStyle,
+numWrap: numWrap,
+caption: caption,
+captionStyle: captionStyle,
+isMax: n === 22,
+onNote: (e) => this.setState({ note: Number(e.target.value) }),
+};
+}
+}
+</script>
+</body>
+</html>

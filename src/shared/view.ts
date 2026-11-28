@@ -76,7 +76,7 @@ export function viewFor(state: GameState, me: PlayerId, now: number): GameView {
       kind: p.kind,
       isHost: p.id === state.hostId,
       absent: isAbsent(state, p, now),
-      ready: p.ready,
+      ready: p.ready || p.id === state.hostId,
       done,
     };
   });
