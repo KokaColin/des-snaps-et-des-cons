@@ -16,6 +16,7 @@ import {
   type Result,
 } from '../shared/engine';
 import { CLOSE_FINAL, CLOSE_SILENT, PING, PONG, type ByeReason, type ClientMessage, type RoomInfo, type ServerMessage } from '../shared/protocol';
+import { buildGameRecord } from '../shared/record';
 import type { GameState, PlayerId } from '../shared/types';
 import { viewFor } from '../shared/view';
 import { groupStub, type Env } from './env';
@@ -34,6 +35,10 @@ interface Meta {
   creator: MemberName;
   createdAt: number;
   lastActivityAt: number;
+  /** Début de la partie en cours (sortie du salon), null au salon. */
+  gameStartedAt?: number | null;
+  /** La partie terminée a été enregistrée dans `Group` (remis à faux à la revanche). */
+  recorded?: boolean;
 }
 
 /** Infos attachées à chaque connexion (survivent à l'hibernation). */
@@ -314,6 +319,14 @@ export class GameRoom extends DurableObject<Env> {
       lastSeen.set(att.playerId, Math.max(lastSeen.get(att.playerId) ?? 0, seen));
     }
     for (const [playerId, seen] of lastSeen) heartbeat(this.state, playerId, seen);
+    // Joueur « connecté » sans aucune connexion ouverte : c'est arrivé après un redémarrage de
+    // l'objet (mise en ligne d'une nouvelle version), qui coupe les connexions sans prévenir.
+    // Sans ça, il resterait connecté à vie et bloquerait les votes et l'arrêt de partie.
+    for (const p of this.state.players) {
+      if (p.connected && !lastSeen.has(p.id) && now - p.lastSeenAt > DROP_SILENT_AFTER_MS) {
+        setConnection(this.state, p.id, false, now);
+      }
+    }
     for (const ws of silent) {
       const att = ws.deserializeAttachment() as Attachment;
       try {
@@ -345,7 +358,38 @@ export class GameRoom extends DurableObject<Env> {
         .markPlayed(newlyUsed, now)
         .catch((e: unknown) => console.error('markPlayed', e));
     }
+    await this.trackGame(now);
     await this.schedule(now);
+  }
+
+  /** Début et fin de partie : la partie terminée est enregistrée une seule fois dans `Group`. */
+  private async trackGame(now: number): Promise<void> {
+    const meta = this.meta;
+    const state = this.state;
+    if (!meta || !state) return;
+    let changed = false;
+    if (state.phase === 'lobby') {
+      changed = meta.gameStartedAt != null || meta.recorded === true;
+      meta.gameStartedAt = null;
+      meta.recorded = false;
+    } else if (meta.gameStartedAt == null) {
+      meta.gameStartedAt = now;
+      changed = true;
+    }
+    if (state.phase === 'final' && !meta.recorded) {
+      const record = buildGameRecord(state, meta.gameStartedAt ?? now, state.phaseStartedAt);
+      if (record) {
+        try {
+          await groupStub(this.env).recordGame(record);
+          meta.recorded = true;
+          changed = true;
+        } catch (e) {
+          // Nouvel essai au prochain événement (alarme de présence, message…).
+          console.error('recordGame', e);
+        }
+      }
+    }
+    if (changed) this.sql.exec('INSERT OR REPLACE INTO room (key, value) VALUES (?, ?)', 'meta', JSON.stringify(meta));
   }
 
   private broadcast(now: number): void {

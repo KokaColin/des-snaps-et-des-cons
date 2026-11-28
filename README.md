@@ -13,8 +13,8 @@ Party game multijoueur du Groupe des 7 : chacun reçoit une photo du groupe, la 
 | Lot | Contenu | État |
 | --- | --- | --- |
 | 1. Fondations | Mise en place, moteur de jeu testé, maquettes | Terminé |
-| 2. Cœur multijoueur | Comptes, photothèque, salon temps réel | En validation |
-| 3. Jeu complet | Partie jouable de bout en bout, Fauto | À venir |
+| 2. Cœur multijoueur | Comptes, photothèque, salon temps réel | Terminé |
+| 3. Jeu complet | Partie jouable de bout en bout, Fauto | En validation |
 | 4. Finition | Habillage, profils, galerie, tests complets, doc | À venir |
 
 ## Organisation du code
@@ -29,6 +29,7 @@ src/
     gadgets/         Gadgets (V1 : la Fauto) ; un fichier par gadget
     photos.ts        Tirage des photos (sans doublon, les moins jouées d'abord)
     meme.ts          Format d'un meme (photo + zones de texte)
+    record.ts        Ce qu'on garde d'une partie terminée
     protocol.ts      Messages échangés entre l'application et le serveur
   server/          Worker Cloudflare et Durable Objects
     index.ts         Routage : /api/rooms, /api/* (vers Group), /ws/:code (vers GameRoom)
@@ -36,8 +37,8 @@ src/
     game-room.ts     Un objet par partie : moteur, WebSocket, chronos (alarmes)
     lib/             Mots de passe, jetons, limitation des tentatives, HTTP
   client/          Application Svelte
-    screens/         Accueil, connexion, rejoindre, salon, photothèque
-    lib/             API, session, connexion temps réel, compression d'images, export zip
+    screens/         Accueil, connexion, rejoindre, salon, photothèque ; game/ : éditeur, vote, résultats, fin
+    lib/             API, session, temps réel, rendu des memes, compression d'images, export zip
 tests/             Tests automatiques du moteur (Vitest)
 docs/              Déploiement et maintenance
 ```

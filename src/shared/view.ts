@@ -46,12 +46,16 @@ export interface GameView {
     meme: MemeRecipe;
     isMine: boolean;
     myNote: number | null;
+    /** Notes déjà données sur ce meme / nombre de votants (tout le monde sauf l'auteur). */
+    voted: number;
+    voters: number;
   } | null;
   results: RoundResults | null;
   fauto: {
     inCirculation: number;
     windowOpen: boolean;
-    mine: {
+    /** Bibliothèque Fauto vide : gadget grisé avec invitation à en ajouter. */
+    libraryEmpty: boolean;    mine: {
       status: HolderStatus;
       lockedUntilRound: number | null;
       offer: string[];
@@ -69,8 +73,9 @@ export function viewFor(state: GameState, me: PlayerId, now: number): GameView {
   const players: PlayerView[] = state.players.map((p) => {
     let done = false;
     if (state.phase === 'creation' && round) done = Boolean(round.submitted[p.id]);
+    // Vote : seulement « a noté ». L'auteur n'est jamais marqué, sinon on le devinerait.
     if (state.phase === 'vote' && round && currentAuthor) {
-      done = p.id === currentAuthor || round.votes[currentAuthor]?.[p.id] !== undefined;
+      done = round.votes[currentAuthor]?.[p.id] !== undefined;
     }
     return {
       id: p.id,
@@ -116,12 +121,15 @@ export function viewFor(state: GameState, me: PlayerId, now: number): GameView {
             meme: structuredClone(round.memes[currentAuthor] as MemeRecipe),
             isMine: currentAuthor === me,
             myNote: round.votes[currentAuthor]?.[me] ?? null,
+            voted: Object.keys(round.votes[currentAuthor] ?? {}).length,
+            voters: state.players.length - 1,
           }
         : null,
     results: state.phase === 'results' && round?.results ? structuredClone(round.results) : null,
     fauto: {
       inCirculation: fautoInCirculation(state),
       windowOpen: isWindowOpen(state),
+      libraryEmpty: state.library.fauto.length === 0,
       mine: holder
         ? {
             status: holder.status,

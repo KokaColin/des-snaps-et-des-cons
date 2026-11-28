@@ -138,11 +138,11 @@ Tout tient sur l'offre gratuite Cloudflare (Workers + Durable Objects SQLite), *
 | 0 | Mise en place | — | Un push met le site à jour sur workers.dev | Fait |
 | 1 | Moteur de jeu | 0 | Chaque règle couverte par un test | Fait (78 tests) |
 | 2 | Maquettes | — | Style validé | Fait |
-| 3 | Comptes | 0 | Connexion sur 2 appareils, mauvais mot de passe refusé, invité sans photothèque | En validation (lot 2) |
-| 4 | Photothèque | 3 | 300 photos importées, grille fluide, restauration corbeille | En validation (lot 2) |
-| 5 | Salon temps réel | 1, 3 | 7 navigateurs, reconnexion au bon écran, hôte remplacé | En validation (lot 2) |
-| 6 | Partie complète | 4, 5 | Parties à 3 et 7 de bout en bout | À faire |
-| 7 | Fauto | 6 | Tous les cas limites rejoués | À faire |
+| 3 | Comptes | 0 | Connexion sur 2 appareils, mauvais mot de passe refusé, invité sans photothèque | Fait (lot 2) |
+| 4 | Photothèque | 3 | 300 photos importées, grille fluide, restauration corbeille | Fait (lot 2) |
+| 5 | Salon temps réel | 1, 3 | 7 navigateurs, reconnexion au bon écran, hôte remplacé | Fait (lot 2) |
+| 6 | Partie complète | 4, 5 | Parties à 3 et 7 de bout en bout | En validation (lot 3) |
+| 7 | Fauto | 6 | Tous les cas limites rejoués | En validation (lot 3) |
 | 8 | Habillage | 2, 6 | iPhone, Android, ordinateur, ajout à l'écran d'accueil | À faire |
 | 9 | Profils et galerie | 6 | Stats exactes, téléchargement identique à l'écran | À faire |
 | 10 | Tests complets et doc | 7, 8, 9 | Les 11 scénarios du cahier initial passent | À faire |

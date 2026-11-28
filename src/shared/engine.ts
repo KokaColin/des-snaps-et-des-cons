@@ -28,7 +28,11 @@ export type Action =
   | { type: 'draft'; layers: unknown }
   | { type: 'submit'; layers: unknown }
   | { type: 'reroll' }
-  | { type: 'vote'; authorId: PlayerId; note: number }
+  /**
+   * Note du meme affiché. Le client ne connaît pas l'auteur (vote anonyme) : il désigne le meme
+   * par sa position dans l'ordre de passage, pour qu'une note en retard ne tombe pas sur le suivant.
+   */
+  | { type: 'vote'; index: number; note: number }
   | ({ type: 'gadget' } & GadgetAction)
   | { type: 'rematch' };
 
@@ -219,12 +223,12 @@ export function dispatch(state: GameState, playerId: PlayerId, action: Action, n
       return reroll(state, playerId);
 
     case 'vote':
-      return vote(state, playerId, action.authorId, action.note, now);
+      return vote(state, playerId, action.index, action.note, now);
 
     case 'gadget': {
       const { gadget, ...rest } = action;
+      if (typeof gadget !== 'string' || !Object.hasOwn(GADGETS, gadget)) return fail('unknown_gadget');
       const module = GADGETS[gadget];
-      if (!module) return fail('unknown_gadget');
       return module.handle(state, playerId, rest as never);
     }
 
@@ -279,10 +283,11 @@ function reroll(state: GameState, playerId: PlayerId): Result {
   return OK;
 }
 
-function vote(state: GameState, voterId: PlayerId, authorId: PlayerId, note: number, now: number): Result {
+function vote(state: GameState, voterId: PlayerId, index: number, note: number, now: number): Result {
   if (state.phase !== 'vote') return fail('wrong_phase');
   const round = currentRound(state);
-  if (round.voteOrder[round.voteCursor] !== authorId) return fail('not_current_meme');
+  const authorId = round.voteOrder[round.voteCursor];
+  if (index !== round.voteCursor || !authorId) return fail('not_current_meme');
   if (voterId === authorId) return fail('own_meme');
   if (!Number.isInteger(note) || note < 0 || note > state.config.maxNote) return fail('invalid_note');
   const votes = (round.votes[authorId] ??= {});

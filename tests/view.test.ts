@@ -24,7 +24,7 @@ describe('Ce que chaque joueur voit', () => {
     const [author, next] = round.voteOrder as [string, string];
     const voter = ['m0', 'm1', 'm2', 'm3'].find((id) => id !== author)!;
     const other = ['m0', 'm1', 'm2', 'm3'].find((id) => id !== author && id !== voter)!;
-    expectOk(act(s, other, { type: 'vote', authorId: author, note: 17 }));
+    expectOk(act(s, other, { type: 'vote', index: 0, note: 17 }));
 
     const v = viewFor(s, voter, s.phaseStartedAt);
     expect(v.vote?.isMine).toBe(false);
@@ -33,6 +33,21 @@ describe('Ce que chaque joueur voit', () => {
     expect(v.vote?.myNote).toBeNull();
     expect(json(v.vote)).not.toContain('17');
     expect(viewFor(s, author, s.phaseStartedAt).vote?.isMine).toBe(true);
+    expect(v.vote).toMatchObject({ voted: 1, voters: 3 });
+  });
+
+  it('vote : la liste des joueurs ne trahit pas l’auteur (il n’est jamais marqué « fait »)', () => {
+    const s = started(4);
+    submitAll(s);
+    const author = currentRound(s).voteOrder[0]!;
+    const v = viewFor(s, 'm0', s.phaseStartedAt);
+    expect(v.players.find((p) => p.id === author)?.done).toBe(false);
+    expect(v.players.every((p) => !p.done)).toBe(true);
+  });
+
+  it('Fauto : la vue dit si la bibliothèque Fauto est vide', () => {
+    expect(viewFor(started(3, 0, { fauto: 0 }), 'm0', 0).fauto.libraryEmpty).toBe(true);
+    expect(viewFor(started(3, 0, { fauto: 5 }), 'm0', 0).fauto.libraryEmpty).toBe(false);
   });
 
   it('résultats : auteurs et notes révélés, aucun total cumulé', () => {

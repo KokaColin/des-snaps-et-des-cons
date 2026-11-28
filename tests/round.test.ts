@@ -121,7 +121,7 @@ describe('Vote', () => {
     const s = started(3);
     submitAll(s);
     const author = currentRound(s).voteOrder[0]!;
-    expect(act(s, author, { type: 'vote', authorId: author, note: 22 })).toEqual({ ok: false, error: 'own_meme' });
+    expect(act(s, author, { type: 'vote', index: 0, note: 22 })).toEqual({ ok: false, error: 'own_meme' });
   });
 
   it('une seule note par meme et par votant, non modifiable', () => {
@@ -129,8 +129,8 @@ describe('Vote', () => {
     submitAll(s);
     const author = currentRound(s).voteOrder[0]!;
     const voter = ids(s).find((id) => id !== author)!;
-    expectOk(act(s, voter, { type: 'vote', authorId: author, note: 12 }));
-    expect(act(s, voter, { type: 'vote', authorId: author, note: 22 })).toEqual({ ok: false, error: 'already_voted' });
+    expectOk(act(s, voter, { type: 'vote', index: 0, note: 12 }));
+    expect(act(s, voter, { type: 'vote', index: 0, note: 22 })).toEqual({ ok: false, error: 'already_voted' });
     expect(currentRound(s).votes[author]?.[voter]).toBe(12);
   });
 
@@ -140,9 +140,9 @@ describe('Vote', () => {
     const author = currentRound(s).voteOrder[0]!;
     const voter = ids(s).find((id) => id !== author)!;
     for (const note of [-1, 23, 10.5, Number.NaN]) {
-      expect(act(s, voter, { type: 'vote', authorId: author, note })).toEqual({ ok: false, error: 'invalid_note' });
+      expect(act(s, voter, { type: 'vote', index: 0, note })).toEqual({ ok: false, error: 'invalid_note' });
     }
-    expectOk(act(s, voter, { type: 'vote', authorId: author, note: 0 }));
+    expectOk(act(s, voter, { type: 'vote', index: 0, note: 0 }));
   });
 
   it('impossible de noter un autre meme que celui affiché', () => {
@@ -150,7 +150,7 @@ describe('Vote', () => {
     submitAll(s);
     const [, second] = currentRound(s).voteOrder;
     const voter = ids(s).find((id) => id !== second)!;
-    expect(act(s, voter, { type: 'vote', authorId: second!, note: 5 })).toEqual({ ok: false, error: 'not_current_meme' });
+    expect(act(s, voter, { type: 'vote', index: 1, note: 5 })).toEqual({ ok: false, error: 'not_current_meme' });
   });
 
   it('passe au meme suivant dès que tous les votants connectés ont noté', () => {
@@ -158,7 +158,7 @@ describe('Vote', () => {
     submitAll(s);
     const round = currentRound(s);
     const author = round.voteOrder[0]!;
-    for (const v of ids(s).filter((id) => id !== author)) act(s, v, { type: 'vote', authorId: author, note: 5 });
+    for (const v of ids(s).filter((id) => id !== author)) act(s, v, { type: 'vote', index: 0, note: 5 });
     expect(round.voteCursor).toBe(1);
   });
 
