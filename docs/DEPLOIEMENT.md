@@ -21,6 +21,23 @@ Le site est alors en ligne à une adresse du type `https://des-snaps-et-des-cons
 - La page d'accueil affiche le logo et « Serveur en ligne ».
 - `https://…workers.dev/api/health` renvoie `{"ok":true,…}`.
 
+## Réinitialiser le mot de passe d'un membre
+
+Le mainteneur dispose d'un secret `ADMIN_TOKEN` (gratuit, stocké chiffré par Cloudflare).
+
+1. Une seule fois : dans le tableau de bord Cloudflare, Workers & Pages → `des-snaps-et-des-cons` → Paramètres → Variables et secrets → Ajouter → type **Secret**, nom `ADMIN_TOKEN`, valeur : une longue phrase aléatoire gardée pour soi. (Ou en ligne de commande : `npx wrangler secret put ADMIN_TOKEN`.)
+2. Pour réinitialiser, par exemple, Maxe :
+
+   ```bash
+   curl -X POST https://des-snaps-et-des-cons.<sous-domaine>.workers.dev/api/admin/reset \
+     -H "Authorization: Bearer <ADMIN_TOKEN>" \
+     -H "Origin: https://des-snaps-et-des-cons.<sous-domaine>.workers.dev" \
+     -H "Content-Type: application/json" \
+     -d '{"member":"Maxe"}'
+   ```
+
+Le compte repart sans mot de passe et toutes ses sessions sont fermées : à sa prochaine connexion, le membre choisit un nouveau mot de passe. Sans secret configuré, l'adresse répond « introuvable ».
+
 ## Rester dans le gratuit
 
 - Aucun moyen de paiement n'est enregistré : un dépassement de quota ne peut rien coûter, l'action échoue jusqu'à la remise à zéro quotidienne (minuit UTC).

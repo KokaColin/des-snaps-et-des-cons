@@ -165,6 +165,17 @@ export function setConnection(state: GameState, playerId: PlayerId, connected: b
   return OK;
 }
 
+/**
+ * Signe de vie sans action (ping du téléphone), daté par le serveur. Ne fait jamais reculer
+ * `lastSeenAt` : un ping ancien reçu après une action récente est ignoré.
+ */
+export function heartbeat(state: GameState, playerId: PlayerId, at: number): Result {
+  const player = findPlayer(state, playerId);
+  if (!player) return fail('unknown_player');
+  if (at > player.lastSeenAt) player.lastSeenAt = at;
+  return OK;
+}
+
 // ---------------------------------------------------------------------------------------------
 // Actions des joueurs
 // ---------------------------------------------------------------------------------------------

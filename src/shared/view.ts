@@ -29,6 +29,8 @@ export interface GameView {
   phase: Phase;
   round: number;
   totalRounds: number;
+  /** Début de la phase en cours (pour dessiner l'anneau du chrono). */
+  phaseStartedAt: number;
   deadline: number | null;
   serverNow: number;
   players: PlayerView[];
@@ -90,6 +92,7 @@ export function viewFor(state: GameState, me: PlayerId, now: number): GameView {
     phase: state.phase,
     round: state.round,
     totalRounds: state.config.rounds,
+    phaseStartedAt: state.phaseStartedAt,
     deadline: state.deadline,
     serverNow: now,
     players,
